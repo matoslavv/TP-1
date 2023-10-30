@@ -1,21 +1,43 @@
 package bulkupload.tp1.data;
 
+import org.apache.commons.csv.CSVRecord;
+
+import java.util.List;
+
 public class Postcard {
+    private String token;
     private String name;
-    private String imageURL;
     private String description;
-    private Integer year;
-    private Integer month;
+    private String imageURL;
     private Integer day;
+    private Integer month;
+    private Integer year;
     private Integer flag;
-    private Integer locationId;
-    private Integer categoryId;
-    private Integer languageId;
-    private Integer availabilityId;
-    private Integer senderId;
-    private Integer recipientId;
-    private Integer solvedId;
-    private Integer statusId;
+    private String location;
+    private String language;
+    private Integer solved;
+    private String availability;
+    private String sender;
+    private String recipient;
+//    TODO: add params Category, data groups, tags
+//    private Category category;
+//    private List<Data> data;
+//    private List<Group> groups;
+//    private List<Tag> tags;
+
+    // Constructor, getters, and setters as needed
+
+//    public Postcard(CSVRecord row) {
+//        this.name = row.get("name");
+//    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getName() {
         return name;
@@ -23,14 +45,6 @@ public class Postcard {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
     }
 
     public String getDescription() {
@@ -41,20 +55,12 @@ public class Postcard {
         this.description = description;
     }
 
-    public Integer getYear() {
-        return year;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Integer getMonth() {
-        return month;
-    }
-
-    public void setMonth(Integer month) {
-        this.month = month;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Integer getDay() {
@@ -65,6 +71,22 @@ public class Postcard {
         this.day = day;
     }
 
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
     public Integer getFlag() {
         return flag;
     }
@@ -73,67 +95,51 @@ public class Postcard {
         this.flag = flag;
     }
 
-    public Integer getLocationId() {
-        return locationId;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocationId(Integer locationId) {
-        this.locationId = locationId;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public Integer getLanguageId() {
-        return languageId;
+    public Integer getSolved() {
+        return solved;
     }
 
-    public void setLanguageId(Integer languageId) {
-        this.languageId = languageId;
+    public void setSolved(Integer solved) {
+        this.solved = solved;
     }
 
-    public Integer getAvailabilityId() {
-        return availabilityId;
+    public String getAvailability() {
+        return availability;
     }
 
-    public void setAvailabilityId(Integer availabilityId) {
-        this.availabilityId = availabilityId;
+    public void setAvailability(String availability) {
+        this.availability = availability;
     }
 
-    public Integer getSenderId() {
-        return senderId;
+    public String getSender() {
+        return sender;
     }
 
-    public void setSenderId(Integer senderId) {
-        this.senderId = senderId;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public Integer getRecipientId() {
-        return recipientId;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setRecipientId(Integer recipientId) {
-        this.recipientId = recipientId;
-    }
-
-    public Integer getSolvedId() {
-        return solvedId;
-    }
-
-    public void setSolvedId(Integer solvedId) {
-        this.solvedId = solvedId;
-    }
-
-    public Integer getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 }

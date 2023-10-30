@@ -1,10 +1,12 @@
 package bulkupload.tp1.common;
 
+import bulkupload.tp1.data.Postcard;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -166,7 +168,40 @@ public class CSV {
     /**
      * Extract all data from the CSV file
      */
-    public <T> List<T> extractAll(Class<T> clazz) {
-         return List.of();
+    public List<Postcard> extractAll() {
+
+        List<Postcard> postcards = new ArrayList<>();
+
+        try {
+            this.open();
+
+//    TODO: add params Category, data groups, tags
+            for (CSVRecord record : this.parser) {
+                Postcard postcard = new Postcard();
+                postcard.setToken(record.get(0));  // Numeric index 0
+                postcard.setName(record.get(1));   // Numeric index 1
+                postcard.setDescription(record.get(2));  // Numeric index 2
+                postcard.setImageURL(record.get(3));  // Numeric index 3
+                postcard.setDay(Integer.parseInt(record.get(4)));  // Numeric index 4
+                postcard.setMonth(Integer.parseInt(record.get(5)));  // Numeric index 5
+                postcard.setYear(Integer.parseInt(record.get(6)));  // Numeric index 6
+                postcard.setFlag(Integer.parseInt(record.get(7)));  // Numeric index 7
+                postcard.setLocation(record.get(8));  // Numeric index 8
+                postcard.setLanguage(record.get(9));  // Numeric index 9
+                postcard.setSolved(Integer.parseInt(record.get(10)));  // Numeric index 10
+                postcard.setAvailability(record.get(11));  // Numeric index 11
+                postcard.setSender(record.get(12));  // Numeric index 12
+                postcard.setRecipient(record.get(13));  // Numeric index 13
+
+                postcards.add(postcard);
+            }
+
+
+            this.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return postcards;
     }
 }
