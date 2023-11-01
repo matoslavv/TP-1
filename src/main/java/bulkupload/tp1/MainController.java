@@ -40,7 +40,7 @@ public class MainController {
      * Handle the upload when the button is clicked
      */
     @FXML
-    protected void onUploadButtonClick() {
+    protected void onUploadButtonClick() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -56,7 +56,8 @@ public class MainController {
                 csv.read(0);
 
 //                List<Postcard> postcards = csv.extractAll();
-            postcards = csv.extractAll();
+//            postcards = csv.extractAll();
+            postcards = csv.loadPostcardsFromCSV();
 
             for (Postcard postcard : postcards) {
                 try {

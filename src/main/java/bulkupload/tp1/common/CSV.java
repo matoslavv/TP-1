@@ -7,6 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ public class CSV {
     private final String path;
     private Reader in;
     private CSVParser parser;
+    private Map<String, Integer> headerMap;
+
 
     public CSV(String path) {
         this.path = path;
@@ -34,6 +37,12 @@ public class CSV {
     public void open() {
         this.loadReader();
         this.loadParser();
+        headerMap = this.parser.getHeaderMap();
+
+        // Print the header map for debugging
+        for (Map.Entry<String, Integer> entry : headerMap.entrySet()) {
+            System.out.println("Header Column: " + entry.getKey() + " -> Index: " + entry.getValue());
+        }
     }
 
     private void closeParser() {
@@ -203,5 +212,54 @@ public class CSV {
         }
 
         return postcards;
+    }
+
+    private Map<String, Integer> createHeaderMap(CSVParser parser) {
+        Map<String, Integer> headerMap = new HashMap<>();
+        headerMap = this.parser.getHeaderMap();
+//        CSVRecord headerRecord = parser.iterator().next();
+//        for (int i = 0; i < headerRecord.size(); i++) {
+//            headerMap.put(headerRecord.get(i), i);
+//        }
+        return this.parser.getHeaderMap();
+    }
+
+    public List<Postcard> loadPostcardsFromCSV() throws IOException {
+        List<Postcard> postcards = new ArrayList<>();
+        this.open();
+
+        for (CSVRecord csvRecord : this.parser) {
+            Postcard postcard = new Postcard();
+            postcard.setToken(getColumnValue(csvRecord, "token"));
+            postcard.setName(getColumnValue(csvRecord, "name"));
+            postcard.setDescription(getColumnValue(csvRecord, "description"));
+            postcard.setImageURL(getColumnValue(csvRecord, "imageURL"));
+            postcard.setDay(Integer.parseInt(getColumnValue(csvRecord, "day")));
+            postcard.setMonth(Integer.parseInt(getColumnValue(csvRecord, "month")));
+            postcard.setYear(Integer.parseInt(getColumnValue(csvRecord, "year")));
+            postcard.setFlag(Integer.parseInt(getColumnValue(csvRecord, "flag")));
+            postcard.setLocation(getColumnValue(csvRecord, "location"));
+            postcard.setLanguage(getColumnValue(csvRecord, "language"));
+            postcard.setSolved(Integer.parseInt(getColumnValue(csvRecord, "solved")));
+            postcard.setAvailability(getColumnValue(csvRecord, "availability"));
+            postcard.setSender(getColumnValue(csvRecord, "sender"));
+            postcard.setRecipient(getColumnValue(csvRecord, "recipient"));
+
+            // Set the category, tags, groups, and other fields as needed
+
+            postcards.add(postcard);
+        }
+
+        this.close();
+        return postcards;
+    }
+
+    private String getColumnValue(CSVRecord csvRecord, String columnName) {
+        if (headerMap.containsKey(columnName)) {
+            int columnIndex = headerMap.get(columnName);
+            return csvRecord.get(columnIndex);
+        } else {
+            return null; // Handle missing columns as needed
+        }
     }
 }

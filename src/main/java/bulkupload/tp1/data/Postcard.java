@@ -19,17 +19,33 @@ public class Postcard {
     private String availability;
     private String sender;
     private String recipient;
-//    TODO: add params Category, data groups, tags
-//    private Category category;
-//    private List<Data> data;
-//    private List<Group> groups;
-//    private List<Tag> tags;
+    private Category category;
+    private List<String> tags;
+    private List<String> groups;
+    private List<Data> data;
+
 
     // Constructor, getters, and setters as needed
 
 //    public Postcard(CSVRecord row) {
 //        this.name = row.get("name");
 //    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Data> getData() {
+        return data;
+    }
+
+    public void setData(List<Data> data) {
+        this.data = data;
+    }
 
     public String getToken() {
         return token;
@@ -141,5 +157,23 @@ public class Postcard {
 
     public void setRecipient(String recipient) {
         this.recipient = recipient;
+    }
+
+    // Getter and setter for 'tags'
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    // Getter and setter for 'groups'
+    public List<String> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<String> groups) {
+        this.groups = groups;
     }
 }
