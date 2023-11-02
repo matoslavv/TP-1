@@ -1,7 +1,9 @@
 package bulkupload.tp1;
 
+import bulkupload.tp1.common.AppToken;
 import bulkupload.tp1.common.CSV;
 import bulkupload.tp1.data.Postcard;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -27,8 +29,14 @@ public class MainController {
 
     private Stage stage;
 
+    private AppToken appToken;
+
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setAppToken(AppToken appToken) {
+        this.appToken = appToken;
     }
 
     @FXML
@@ -57,7 +65,7 @@ public class MainController {
 
 //                List<Postcard> postcards = csv.extractAll();
 //            postcards = csv.extractAll();
-            postcards = csv.loadPostcardsFromCSV();
+            postcards = csv.loadPostcardsFromCSV(appToken.getApiResponse());
 
             for (Postcard postcard : postcards) {
                 try {
@@ -133,35 +141,63 @@ public class MainController {
                     Postcard selectedPostcard = findPostcardByName(selectedItem);
 
                     if (selectedPostcard != null) {
-                        // Create an Alert to display the details
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Postcard Details");
                         alert.setHeaderText(null);
 
                         // Set the content of the Alert with the Postcard details
-                        String details = "Token: " + selectedPostcard.getToken() + "\n" +
-                                "Name: " + selectedPostcard.getName() + "\n" +
-                                "Description: " + selectedPostcard.getDescription() + "\n" +
-                                "Image URL: " + selectedPostcard.getImageURL() + "\n" +
-                                "Day: " + selectedPostcard.getDay() + "\n" +
-                                "Month: " + selectedPostcard.getMonth() + "\n" +
-                                "Year: " + selectedPostcard.getYear() + "\n" +
-                                "Flag: " + selectedPostcard.getFlag() + "\n" +
-                                "Location: " + selectedPostcard.getLocation() + "\n" +
-                                "Language: " + selectedPostcard.getLanguage() + "\n" +
-                                "Solved: " + selectedPostcard.getSolved() + "\n" +
-                                "Availability: " + selectedPostcard.getAvailability() + "\n" +
-                                "Sender: " + selectedPostcard.getSender() + "\n" +
-                                "Recipient: " + selectedPostcard.getRecipient() + "\n";
-                        // Add more fields as needed
+                        StringBuilder details = new StringBuilder();
+                        details.append("Token: ").append(selectedPostcard.getToken()).append("\n");
+                        details.append("Name: ").append(selectedPostcard.getName()).append("\n");
+                        details.append("Description: ").append(selectedPostcard.getDescription()).append("\n");
+                        details.append("Image URL: ").append(selectedPostcard.getImageURL()).append("\n");
+                        details.append("Day: ").append(selectedPostcard.getDay()).append("\n");
+                        details.append("Month: ").append(selectedPostcard.getMonth()).append("\n");
+                        details.append("Year: ").append(selectedPostcard.getYear()).append("\n");
+                        details.append("Flag: ").append(selectedPostcard.getFlag()).append("\n");
+                        details.append("Location: ").append(selectedPostcard.getLocation()).append("\n");
+                        details.append("Language: ").append(selectedPostcard.getLanguage()).append("\n");
+                        details.append("Solved: ").append(selectedPostcard.getSolved()).append("\n");
+                        details.append("Availability: ").append(selectedPostcard.getAvailability()).append("\n");
+                        details.append("Sender: ").append(selectedPostcard.getSender()).append("\n");
+                        details.append("Recipient: ").append(selectedPostcard.getRecipient()).append("\n");
 
-                        alert.setContentText(details);
+                        // Check for null values before joining
+                        if (selectedPostcard.getCategory() != null) {
+                            details.append("Category: ").append(selectedPostcard.getCategory().getName()).append("\n");
+                        } else {
+                            details.append("Category: N/A\n");
+                        }
 
-                        // Show the Alert
+                        if (selectedPostcard.getTags() != null) {
+                            details.append("Tags: ").append(String.join(", ", selectedPostcard.getTags())).append("\n");
+                        } else {
+                            details.append("Tags: N/A\n");
+                        }
+
+                        if (selectedPostcard.getGroups() != null) {
+                            details.append("Groups: ").append(String.join(", ", selectedPostcard.getGroups())).append("\n");
+                        } else {
+                            details.append("Groups: N/A\n");
+                        }
+
+                        if (selectedPostcard.getData() != null) {
+                            details.append("Data: ").append(selectedPostcard.getData()).append("\n");
+                        } else {
+                            details.append("Data: N/A\n");
+                        }
+
+                        alert.setContentText(details.toString());
                         alert.showAndWait();
                     }
                 }
             }
         });
     }
+
+    public void onUploadDBButtonClick(ActionEvent event) {
+        CryptogramUploader uploader = new CryptogramUploader();
+        uploader.uploadPostcards(postcards);
+    }
+
 }

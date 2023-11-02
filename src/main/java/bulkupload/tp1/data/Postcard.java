@@ -16,7 +16,7 @@ public class Postcard {
     private String location;
     private String language;
     private Integer solved;
-    private String availability;
+    private Integer availability;
     private String sender;
     private String recipient;
     private Category category;
@@ -27,16 +27,19 @@ public class Postcard {
 
     // Constructor, getters, and setters as needed
 
-//    public Postcard(CSVRecord row) {
-//        this.name = row.get("name");
-//    }
+    public Postcard() {
+        this.data = List.of();     // Initialize "data" as an empty list
+        this.groups = List.of();   // Initialize "groups" as an empty list
+        this.tags = List.of();     // Initialize "tags" as an empty list
+        this.category = new Category(); // Initialize "category" as an empty Category object
+    }
 
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(String category) {
+        this.category.setName(category);
     }
 
     public List<Data> getData() {
@@ -135,11 +138,11 @@ public class Postcard {
         this.solved = solved;
     }
 
-    public String getAvailability() {
+    public Integer getAvailability() {
         return availability;
     }
 
-    public void setAvailability(String availability) {
+    public void setAvailability(Integer availability) {
         this.availability = availability;
     }
 

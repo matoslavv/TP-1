@@ -1,5 +1,6 @@
 package bulkupload.tp1;
 
+import bulkupload.tp1.common.AppToken;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +19,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    private AppToken appToken; // Property to store the API response
+
+    public AppToken getApiResponse() {
+        return appToken;
+    }
+
+    public void setAppToken(AppToken appToken) {
+        this.appToken = appToken;
+    }
+
     @FXML
     private TextField username;
 
@@ -41,7 +53,8 @@ public class LoginController implements Initializable {
 
     public void checkLogin() {
         String apiUrl = "https://www.test.hcportal.eu/api/rest/login.php";
-        String requestBody = "{\"username\": \"" + username.getText() + "\", \"password\": \"" + password.getText() + "\"}";
+//        String requestBody = "{\"username\": \"" + username.getText() + "\", \"password\": \"" + password.getText() + "\"}";
+        String requestBody = "{\"username\": \"" + "student" + "\", \"password\": \"" + "38f97150663a0324ce8ee81d3e0d218059229dae06d717e2acfefebfdd3b24a5" + "\"}";
 
         try {
             URL url = new URL(apiUrl);
@@ -68,18 +81,12 @@ public class LoginController implements Initializable {
                     String responseJson = response.toString();
                     System.out.println("API Response: " + responseJson);
 
-                    // You should parse the JSON response to get the token
-                    // String token = /* Parse the response JSON to get the token */;
-                    // Save the token to use it in your application
 
                     if (!responseJson.contains("invalid")) {
-                        // You should parse the JSON response to get the token
-                        // String token = /* Parse the response JSON to get the token */;
-                        // Save the token to use it in your application
-
                         wrongLogin.setText("Success!");
+                        appToken.setApiResponse(responseJson);
                         MainApplication m = new MainApplication();
-                        m.changeScene("hello-view.fxml");
+                        m.changeScene("hello-view.fxml",appToken);
                     } else {
                         wrongLogin.setText("Invalid username or password");
                     }

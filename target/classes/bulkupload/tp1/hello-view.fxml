@@ -19,6 +19,9 @@
     <!-- New Button to Show List -->
     <Button text="Show List" onAction="#onShowListButtonClick"/>
 
+    <!-- New Button to Upload Postcards -->
+    <Button text="UploadDB" onAction="#onUploadDBButtonClick"/>
+
     <!-- Placeholder for the List View -->
     <ListView fx:id="itemList" prefHeight="200.0" prefWidth="300.0"/>
 

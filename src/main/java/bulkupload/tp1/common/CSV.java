@@ -17,6 +17,12 @@ public class CSV {
     private CSVParser parser;
     private Map<String, Integer> headerMap;
 
+    private List<Postcard> postcards = new ArrayList<>();
+
+    public List<Postcard> getPostcards() {
+        return postcards;
+    }
+
 
     public CSV(String path) {
         this.path = path;
@@ -177,60 +183,14 @@ public class CSV {
     /**
      * Extract all data from the CSV file
      */
-    public List<Postcard> extractAll() {
+    //    TODO: add params Category, data groups, tags
+    public List<Postcard> loadPostcardsFromCSV(String token) throws IOException {
 
-        List<Postcard> postcards = new ArrayList<>();
-
-        try {
-            this.open();
-
-//    TODO: add params Category, data groups, tags
-            for (CSVRecord record : this.parser) {
-                Postcard postcard = new Postcard();
-                postcard.setToken(record.get(0));  // Numeric index 0
-                postcard.setName(record.get(1));   // Numeric index 1
-                postcard.setDescription(record.get(2));  // Numeric index 2
-                postcard.setImageURL(record.get(3));  // Numeric index 3
-                postcard.setDay(Integer.parseInt(record.get(4)));  // Numeric index 4
-                postcard.setMonth(Integer.parseInt(record.get(5)));  // Numeric index 5
-                postcard.setYear(Integer.parseInt(record.get(6)));  // Numeric index 6
-                postcard.setFlag(Integer.parseInt(record.get(7)));  // Numeric index 7
-                postcard.setLocation(record.get(8));  // Numeric index 8
-                postcard.setLanguage(record.get(9));  // Numeric index 9
-                postcard.setSolved(Integer.parseInt(record.get(10)));  // Numeric index 10
-                postcard.setAvailability(record.get(11));  // Numeric index 11
-                postcard.setSender(record.get(12));  // Numeric index 12
-                postcard.setRecipient(record.get(13));  // Numeric index 13
-
-                postcards.add(postcard);
-            }
-
-
-            this.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return postcards;
-    }
-
-    private Map<String, Integer> createHeaderMap(CSVParser parser) {
-        Map<String, Integer> headerMap = new HashMap<>();
-        headerMap = this.parser.getHeaderMap();
-//        CSVRecord headerRecord = parser.iterator().next();
-//        for (int i = 0; i < headerRecord.size(); i++) {
-//            headerMap.put(headerRecord.get(i), i);
-//        }
-        return this.parser.getHeaderMap();
-    }
-
-    public List<Postcard> loadPostcardsFromCSV() throws IOException {
-        List<Postcard> postcards = new ArrayList<>();
         this.open();
 
         for (CSVRecord csvRecord : this.parser) {
             Postcard postcard = new Postcard();
-            postcard.setToken(getColumnValue(csvRecord, "token"));
+            postcard.setToken(token);
             postcard.setName(getColumnValue(csvRecord, "name"));
             postcard.setDescription(getColumnValue(csvRecord, "description"));
             postcard.setImageURL(getColumnValue(csvRecord, "imageURL"));
@@ -241,9 +201,10 @@ public class CSV {
             postcard.setLocation(getColumnValue(csvRecord, "location"));
             postcard.setLanguage(getColumnValue(csvRecord, "language"));
             postcard.setSolved(Integer.parseInt(getColumnValue(csvRecord, "solved")));
-            postcard.setAvailability(getColumnValue(csvRecord, "availability"));
+            postcard.setAvailability(Integer.parseInt(getColumnValue(csvRecord, "availability")));
             postcard.setSender(getColumnValue(csvRecord, "sender"));
             postcard.setRecipient(getColumnValue(csvRecord, "recipient"));
+            postcard.setCategory(getColumnValue(csvRecord, "category"));
 
             // Set the category, tags, groups, and other fields as needed
 

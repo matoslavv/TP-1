@@ -9,6 +9,9 @@ module bulkupload.tp1 {
     requires java.sql;
     requires gson;
     requires org.apache.commons.csv;
+    requires org.apache.httpcomponents.httpclient;
+    requires org.apache.httpcomponents.httpcore;
+
 
     opens bulkupload.tp1 to javafx.fxml;
 
