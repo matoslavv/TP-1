@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bulkupload.tp1.LoginController">
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="453.0" fitWidth="287.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@LOGIN.png" />
+               </image></ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="317.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="username" layoutX="82.0" layoutY="165.0" />
+            <Label layoutX="80.0" layoutY="145.0" text="Username" textFill="#2c3e50">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="210.0" text="Password" textFill="#2c3e50">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="password" layoutX="82.0" layoutY="230.0" />
+            <Button fx:id="button" layoutX="117.0" layoutY="286.0" mnemonicParsing="false" onAction="#userLogin" prefHeight="22.0" prefWidth="78.0" style="-fx-background-color: #2c3e50;" text="Log In" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Label fx:id="wrongLogin" layoutX="82.0" layoutY="256.0" prefHeight="18.0" prefWidth="149.0" textFill="RED" />
+         </children></AnchorPane>
+   </center>
+</BorderPane>
