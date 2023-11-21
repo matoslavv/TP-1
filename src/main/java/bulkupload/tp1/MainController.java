@@ -3,12 +3,12 @@ package bulkupload.tp1;
 import bulkupload.tp1.common.AppToken;
 import bulkupload.tp1.common.CSV;
 import bulkupload.tp1.data.Postcard;
+import com.google.gson.GsonBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.google.gson.Gson;
@@ -24,6 +24,9 @@ public class MainController {
 
     @FXML
     private ListView<String> itemList;
+
+    @FXML
+    private TextArea detailsTextArea;
 
     private List<Postcard> postcards  = new ArrayList<>();;
 
@@ -132,6 +135,57 @@ public class MainController {
      * Show the details of a selected Postcard in an Alert dialog.
      */
     public void initialize() {
+
+
+        // Add a listener to handle key events in the itemList
+        itemList.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case UP:
+                case DOWN:
+                    showSelectedItemJSON();
+//                    showList();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+
+        itemList.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                if (event.getClickCount() == 1) {
+                    // Single-click detected
+                    showSelectedItemJSON();
+//                    showList();
+                } else if (event.getClickCount() == 2) {
+                    // Double-click detected
+//                    showSelectedIteamDetails();
+                    showModal();
+                }
+            }
+        });
+    }
+
+
+    private void showSelectedItemJSON() {
+        String selectedItem = itemList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            // Assuming you have a method to retrieve Postcard based on name
+            Postcard selectedPostcard = findPostcardByName(selectedItem);
+
+            if (selectedPostcard != null) {
+                // Use Gson to convert Postcard to JSON
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(selectedPostcard);
+
+                // Display the details in the detailsTextArea
+                detailsTextArea.setText(json);
+            }
+        }
+    }
+
+    public void showSelectedIteamDetails(){
         itemList.setOnMouseClicked(event -> {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                 // Double-click detected
@@ -194,6 +248,45 @@ public class MainController {
             }
         });
     }
+
+
+
+    private void showModal() {
+        String selectedItem = itemList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            // Assuming you have a method to retrieve Postcard based on name
+            Postcard selectedPostcard = findPostcardByName(selectedItem);
+
+            if (selectedPostcard != null) {
+                // Use Gson to convert Postcard to JSON
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String json = gson.toJson(selectedPostcard);
+
+                // Create an Alert with a TextArea for displaying JSON content
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Postcard JSON");
+                alert.setHeaderText(null);
+
+                // Create a TextArea and set its content to the JSON text
+                TextArea textArea = new TextArea(json);
+                textArea.setEditable(false);
+                textArea.setWrapText(true);
+
+                // Set padding around the TextArea
+                textArea.setStyle("-fx-padding: 10px;");
+
+                // Set the content of the Alert to the TextArea
+                alert.getDialogPane().setContent(textArea);
+
+                // Increase the size of the Alert (optional)
+                alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+
+                // Show the Alert and wait for the user's response
+                alert.showAndWait();
+            }
+        }
+    }
+
 
     public void onUploadDBButtonClick(ActionEvent event) {
         CryptogramUploader uploader = new CryptogramUploader();
