@@ -17,30 +17,32 @@
     </padding>
    <SplitPane dividerPositions="0.5062724014336918" prefHeight="400.0" prefWidth="600.0">
       <items>
-         <SplitPane dividerPositions="0.2288135593220339" orientation="VERTICAL" prefHeight="338.0" prefWidth="275.0">
+         <SplitPane dividerPositions="0.29748603351955305" orientation="VERTICAL" prefHeight="338.0" prefWidth="275.0">
            <items>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="39.0" prefWidth="226.0">
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="101.0" prefWidth="279.0">
                   <children>
                      <AnchorPane prefHeight="22.0" prefWidth="300.0">
                         <children>
                         
-                                  <Button layoutX="7.0" layoutY="4.0" onAction="#onUploadButtonClick" prefHeight="26.0" prefWidth="86.0" text="Upload" />
+                                  <Button layoutX="7.0" layoutY="6.0" onAction="#onUploadButtonClick" prefHeight="26.0" prefWidth="86.0" text="Upload" />
                         
                                   <!-- New Button to Upload Postcards -->
-                            <Button layoutX="187.0" layoutY="4.0" onAction="#onUploadDBButtonClick" prefHeight="26.0" prefWidth="86.0" text="UploadDB" />
+                            <Button layoutX="187.0" layoutY="6.0" onAction="#onUploadDBButtonClick" prefHeight="26.0" prefWidth="86.0" text="UploadDB" />
                         
                                         <!-- New Button to Show List -->
-                            <Button layoutX="97.0" layoutY="4.0" onAction="#onShowListButtonClick" prefHeight="26.0" prefWidth="86.0" text="Show List" />
+                            <Button layoutX="97.0" layoutY="6.0" onAction="#onShowListButtonClick" prefHeight="26.0" prefWidth="86.0" text="Show List" />
                         </children>
                      </AnchorPane>
-                     <TextField layoutX="8.0" layoutY="39.0" prefHeight="26.0" prefWidth="264.0" />
+                     <TextField layoutX="8.0" layoutY="39.0" prefHeight="26.0" prefWidth="264.0" promptText="Image Path" />
+                     <TextField fx:id="fromTextField" layoutX="8.0" layoutY="71.0" prefHeight="26.0" prefWidth="130.0" promptText="From" />
+                     <TextField fx:id="toTextField" layoutX="142.0" layoutY="71.0" prefHeight="26.0" prefWidth="130.0" promptText="To" />
                   </children>
                </AnchorPane>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="225.0" prefWidth="226.0">
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="251.0" prefWidth="279.0">
                   <children>
                   
                                                           <!-- Placeholder for the List View -->
-                      <ListView fx:id="itemList" prefHeight="273.0" prefWidth="279.0" />
+                      <ListView fx:id="itemList" layoutY="-1.0" prefHeight="248.0" prefWidth="279.0" />
                   </children>
                </AnchorPane>
            </items>

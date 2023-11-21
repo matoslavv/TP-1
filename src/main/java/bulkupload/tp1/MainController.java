@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainController {
+    public TextField fromTextField;
+    public TextField toTextField;
     @FXML
     private Label welcomeText;
 
@@ -79,6 +81,8 @@ public class MainController {
                 }
             }
         }
+        onShowListButtonClick();
+
     }
 
     /**
@@ -102,18 +106,22 @@ public class MainController {
             for (Postcard postcard : postcards) {
                 try {
                     String name = postcard.getName();
-//                    itemList.getItems().add(counter + ". " + name);
-                    itemList.getItems().add(name);
+                    itemList.getItems().add(counter + ". " + name);
+//                    itemList.getItems().add(name);
                     counter++;
                 } catch (Exception e) {
                     System.err.println("Error getting the name of the Postcard: " + e.getMessage());
                 }
             }
         }
+        fromTextField.clear();
+        toTextField.clear();
     }
 
 
-    private Postcard findPostcardByName(String name) {
+    private Postcard findPostcardByName(String displayString) {
+        String name = displayString.replaceFirst("^\\d+\\.\\s*", "");
+
         for (Postcard postcard : postcards) {
             if (name.equals(postcard.getName())) {
                 return postcard;
@@ -289,8 +297,36 @@ public class MainController {
 
 
     public void onUploadDBButtonClick(ActionEvent event) {
+        // Get the range from the input fields
+        int from = Integer.parseInt(fromTextField.getText());
+        int to = Integer.parseInt(toTextField.getText());
+
+        // Validate the range
+        if (from < 1 || to > postcards.size() || from > to) {
+            // Show an error alert for invalid range
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Range");
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a valid range of postcards.");
+            alert.showAndWait();
+            return;
+        }
+
+        // Get the selected postcards within the specified range
+        List<Postcard> selectedPostcards = postcards.subList(from - 1, to);
+
+        // Upload selected postcards to the database
         CryptogramUploader uploader = new CryptogramUploader();
-        uploader.uploadPostcards(postcards);
+        uploader.uploadPostcards(selectedPostcards);
+
+        // Remove selected postcards from the list
+        postcards.removeAll(selectedPostcards);
+
+        // Update the displayed list
+        onShowListButtonClick();
+
+//        CryptogramUploader uploader = new CryptogramUploader();
+//        uploader.uploadPostcards(postcards);
     }
 
 }
