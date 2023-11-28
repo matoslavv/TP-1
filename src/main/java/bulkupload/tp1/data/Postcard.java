@@ -2,6 +2,7 @@ package bulkupload.tp1.data;
 
 import org.apache.commons.csv.CSVRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Postcard {
@@ -15,8 +16,8 @@ public class Postcard {
     private Integer flag;
     private String location;
     private String language;
-    private Integer solved;
-    private Integer availability;
+    private String solved;
+    private String availability;
     private String sender;
     private String recipient;
     private Category category;
@@ -28,20 +29,20 @@ public class Postcard {
     // Constructor, getters, and setters as needed
 
     public Postcard() {
-        this.data = List.of();     // Initialize "data" as an empty list
-        this.groups = List.of();   // Initialize "groups" as an empty list
-        this.tags = List.of();     // Initialize "tags" as an empty list
+        this.data = new ArrayList<>();
+        this.groups = new ArrayList<>();
+        this.tags = new ArrayList<>();
         this.category = new Category(); // Initialize "category" as an empty Category object
+//        this.groups = new ArrayList<>();
     }
 
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category.setName(category);
+    public void setCategory(Category category) {
+        this.category = category;
     }
-
     public List<Data> getData() {
         return data;
     }
@@ -130,19 +131,19 @@ public class Postcard {
         this.language = language;
     }
 
-    public Integer getSolved() {
+    public String getSolved() {
         return solved;
     }
 
-    public void setSolved(Integer solved) {
+    public void setSolved(String solved) {
         this.solved = solved;
     }
 
-    public Integer getAvailability() {
+    public String getAvailability() {
         return availability;
     }
 
-    public void setAvailability(Integer availability) {
+    public void setAvailability(String availability) {
         this.availability = availability;
     }
 
@@ -178,5 +179,25 @@ public class Postcard {
 
     public void setGroups(List<String> groups) {
         this.groups = groups;
+    }
+
+    // Method to add a group name to the list
+    public void addGroupName(String groupName) {
+        if (groupName != null && !groupName.isEmpty()) {
+            this.groups.add(groupName);
+        }
+    }
+
+    public void addData(Data data) {
+        this.data.add(data);
+    }
+
+    // Getter for the groupNames list
+    public List<String> getGroupNames() {
+        return this.groups;
+    }
+
+    public void updatePath(String path){
+        this.imageURL= path+this.imageURL;
     }
 }

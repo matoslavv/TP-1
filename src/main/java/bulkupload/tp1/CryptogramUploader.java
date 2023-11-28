@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 public class CryptogramUploader {
     private static final String API_URL = "https://www.test.hcportal.eu/api/rest/createCryptogram.php";
 
-    public void uploadPostcards(List<Postcard> postcards) {
+    public void uploadPostcards(List<Postcard> postcards, String imagePath) {
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(API_URL);
 
@@ -25,7 +25,7 @@ public class CryptogramUploader {
             for (Postcard postcard : postcards) {
                 // Convert a single Postcard to JSON
 //                String json = gson.toJson(postcard);
-
+                postcard.updatePath(imagePath);
                 // Create a JSON object to hold the "records" property
                 JsonObject jsonObject = new JsonObject();
                 // Convert the current postcard to a JSON object

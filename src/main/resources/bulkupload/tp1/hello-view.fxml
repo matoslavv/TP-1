@@ -33,7 +33,7 @@
                             <Button layoutX="97.0" layoutY="6.0" onAction="#onShowListButtonClick" prefHeight="26.0" prefWidth="86.0" text="Show List" />
                         </children>
                      </AnchorPane>
-                     <TextField layoutX="8.0" layoutY="39.0" prefHeight="26.0" prefWidth="264.0" promptText="Image Path" />
+                     <TextField fx:id="imagePathTextField" layoutX="8.0" layoutY="39.0" prefHeight="26.0" prefWidth="264.0" promptText="Image Path" />
                      <TextField fx:id="fromTextField" layoutX="8.0" layoutY="71.0" prefHeight="26.0" prefWidth="130.0" promptText="From" />
                      <TextField fx:id="toTextField" layoutX="142.0" layoutY="71.0" prefHeight="26.0" prefWidth="130.0" promptText="To" />
                   </children>

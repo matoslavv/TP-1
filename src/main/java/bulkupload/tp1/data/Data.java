@@ -7,6 +7,16 @@ public class Data {
     private Integer datagroupId;
     private Integer dlProtection;
 
+    // Constructor
+    public Data(String blobb, String description, String fileType,int dataGroupId) {
+        this.blobb = blobb;
+        this.description = description;
+        this.filetype = fileType;
+        // Set default values for other fields if needed
+        this.datagroupId = dataGroupId; // Assuming it's nullable
+        this.dlProtection = 1; // Assuming it's nullable
+    }
+
     public String getBlobb() {
         return blobb;
     }
