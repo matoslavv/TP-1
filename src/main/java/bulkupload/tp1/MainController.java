@@ -21,6 +21,10 @@ import java.util.List;
 public class MainController {
     public TextField fromTextField;
     public TextField toTextField;
+
+    @FXML
+    private TextField imagePathTextField;
+
     @FXML
     private Label welcomeText;
 
@@ -70,6 +74,9 @@ public class MainController {
 
 //                List<Postcard> postcards = csv.extractAll();
 //            postcards = csv.extractAll();
+
+
+
             postcards = csv.loadPostcardsFromCSV(appToken.getApiResponse());
 
             for (Postcard postcard : postcards) {
@@ -315,9 +322,12 @@ public class MainController {
         // Get the selected postcards within the specified range
         List<Postcard> selectedPostcards = postcards.subList(from - 1, to);
 
+        // Read the imagePath from the TextField
+        String imagePath = imagePathTextField.getText();
+
         // Upload selected postcards to the database
         CryptogramUploader uploader = new CryptogramUploader();
-        uploader.uploadPostcards(selectedPostcards);
+        uploader.uploadPostcards(selectedPostcards, imagePath);
 
         // Remove selected postcards from the list
         postcards.removeAll(selectedPostcards);
