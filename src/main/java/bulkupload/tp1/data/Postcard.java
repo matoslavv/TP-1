@@ -75,6 +75,15 @@ public class Postcard {
         this.description = description;
     }
 
+    public void setDescriptionNE(String description) {
+        if (description != null && !description.isEmpty() && !description.equals("null")) {
+            this.description = "<p>" + description + "</p>";
+        } else {
+            this.description = "";
+        }
+    }
+
+
     public String getImageURL() {
         return imageURL;
     }
@@ -197,7 +206,35 @@ public class Postcard {
         return this.groups;
     }
 
-    public void updatePath(String path){
-        this.imageURL= path+this.imageURL;
+    public void updatePath(String path, String thumbnail) {
+        // Ensure the path ends with "/"
+        path = ensureTrailingSlash(path);
+
+        // Ensure other components end with "/"
+//        this.imageURL = ensureTrailingSlash(this.imageURL);
+//        this.name = ensureTrailingSlash(this.name);
+
+        // Update the imageURL by concatenating the components
+        this.imageURL = path + this.name + thumbnail + this.imageURL+".jpg";
+
+        for (Data data : data) {
+            // Check if the filetype is "Image"
+            if ("Image".equalsIgnoreCase(data.getFiletype())) {
+                // Update the imageURL with the specified format
+                data.setBlobb(path + this.name + data.getBlobb()+".jpg");
+//                break; // Assuming you want to update imageURL only once
+            }
+        }
     }
+
+    // Helper method to ensure a string ends with "/"
+    private String ensureTrailingSlash(String str) {
+        if (str != null && !str.endsWith("/")) {
+            // If not null and doesn't end with "/", add "/"
+            str += "/";
+        }
+        return str;
+    }
+
+
 }

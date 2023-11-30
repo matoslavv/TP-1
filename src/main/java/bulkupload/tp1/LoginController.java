@@ -16,6 +16,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -47,14 +49,31 @@ public class LoginController implements Initializable {
         // Initialize any actions or logic when the FXML components are loaded.
     }
 
-    public void userLogin(ActionEvent event) throws IOException {
+    public void userLogin(ActionEvent event) throws IOException, NoSuchAlgorithmException {
         checkLogin();
     }
 
-    public void checkLogin() {
+    public String byteToHex(byte[] nums) {
+        StringBuilder sb = new StringBuilder();
+        for (byte num: nums
+             ) {
+            char[] hexDigits = new char[2];
+            hexDigits[0] = Character.forDigit((num >> 4) & 0xF, 16);
+            hexDigits[1] = Character.forDigit((num & 0xF), 16);
+            sb.append(new String(hexDigits));
+        }
+        return sb.toString();
+    }
+
+    public void checkLogin() throws NoSuchAlgorithmException {
         String apiUrl = "https://www.test.hcportal.eu/api/rest/login.php";
 //        String requestBody = "{\"username\": \"" + username.getText() + "\", \"password\": \"" + password.getText() + "\"}";
-        String requestBody = "{\"username\": \"" + "student" + "\", \"password\": \"" + "38f97150663a0324ce8ee81d3e0d218059229dae06d717e2acfefebfdd3b24a5" + "\"}";
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] encodedhash = digest.digest(password.getText().getBytes(StandardCharsets.UTF_8));
+        String pass = byteToHex(encodedhash);
+
+//        String requestBody = "{\"username\": \"" + "student" + "\", \"password\": \"" + "38f97150663a0324ce8ee81d3e0d218059229dae06d717e2acfefebfdd3b24a5" + "\"}";
+        String requestBody = "{\"username\": \"" + username.getText() + "\", \"password\": \"" + pass + "\"}";
 
         try {
             URL url = new URL(apiUrl);
@@ -82,7 +101,7 @@ public class LoginController implements Initializable {
                     System.out.println("API Response: " + responseJson);
 
 
-                    if (!responseJson.contains("invalid")) {
+                    if (!responseJson.contains("invalid") && !responseJson.isEmpty()) {
                         wrongLogin.setText("Success!");
                         appToken.setApiResponse(responseJson);
                         MainApplication m = new MainApplication();

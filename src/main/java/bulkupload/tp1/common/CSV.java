@@ -199,8 +199,8 @@ public class CSV {
             postcard.setToken(token);
 
             postcard.setName(getNonEmptyColumnValue(csvRecord, "filename"));
-            postcard.setDescription(getNonEmptyColumnValue(csvRecord, "description"));
-            postcard.setImageURL(getNonEmptyColumnValue(csvRecord, "imageURL"));
+            postcard.setDescriptionNE(getNonEmptyColumnValue(csvRecord, "description"));
+            postcard.setImageURL(getNonEmptyColumnValue(csvRecord, "imageUrl"));
             postcard.setDay(parseInteger(getColumnValue(csvRecord, "day")));
             postcard.setMonth(parseInteger(getColumnValue(csvRecord, "month")));
             postcard.setYear(parseInteger(getColumnValue(csvRecord, "year")));
@@ -232,7 +232,7 @@ public class CSV {
                 }
             } else {
                 // Handle the case where categoryValue is null, e.g., set default values for the category
-                postcardCategory.setName("DefaultCategory");
+                postcardCategory.setName(null);
                 postcardCategory.setMainCategory(null);
             }
 
@@ -241,12 +241,12 @@ public class CSV {
 
 
             // Extract the tags as a single string and split them
-            String tagsString = getColumnValue(csvRecord, "tags");
+            String tagsString = getColumnValue(csvRecord, "tag");
             List<String> tags = new ArrayList<>();
 
             if (tagsString != null) {
                 // Split the tags only if tagsString is not null
-                tags = splitTags(tagsString);
+                tags = splitTagsBack(tagsString);
             }
 
             // Set the tags in the postcard object
@@ -330,6 +330,18 @@ public class CSV {
         String[] tagsArray = tagsString.split("\\s+");
         return List.of(tagsArray);
     }
+
+    private List<String> splitTagsSemi(String tagsString) {
+        String[] tagsArray = tagsString.split(";");
+        return List.of(tagsArray);
+    }
+
+    private List<String> splitTagsBack(String tagsString) {
+        String[] tagsArray = tagsString.split("_");
+        return List.of(tagsArray);
+    }
+
+
 
     private String getNonEmptyColumnValue(CSVRecord csvRecord, String columnName) {
         String value = getColumnValue(csvRecord, columnName);

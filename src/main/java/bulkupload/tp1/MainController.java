@@ -26,6 +26,15 @@ public class MainController {
     private TextField imagePathTextField;
 
     @FXML
+    private ToggleGroup address; // Assuming the ToggleGroup is named "address"
+
+    @FXML
+    private RadioButton radioPic;
+
+    @FXML
+    private RadioButton radioAdr;
+
+    @FXML
     private Label welcomeText;
 
     @FXML
@@ -304,39 +313,61 @@ public class MainController {
 
 
     public void onUploadDBButtonClick(ActionEvent event) {
-        // Get the range from the input fields
-        int from = Integer.parseInt(fromTextField.getText());
-        int to = Integer.parseInt(toTextField.getText());
-
-        // Validate the range
-        if (from < 1 || to > postcards.size() || from > to) {
-            // Show an error alert for invalid range
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid Range");
-            alert.setHeaderText(null);
-            alert.setContentText("Please enter a valid range of postcards.");
-            alert.showAndWait();
-            return;
-        }
-
-        // Get the selected postcards within the specified range
-        List<Postcard> selectedPostcards = postcards.subList(from - 1, to);
-
         // Read the imagePath from the TextField
         String imagePath = imagePathTextField.getText();
 
-        // Upload selected postcards to the database
-        CryptogramUploader uploader = new CryptogramUploader();
-        uploader.uploadPostcards(selectedPostcards, imagePath);
+        if (fromTextField.getText().isEmpty() || toTextField.getText().isEmpty()) {
+            // Upload all postcards since the interval is not set
+            CryptogramUploader uploader = new CryptogramUploader();
+            uploader.uploadPostcards(postcards, imagePath, getActiveRadioButton());
 
-        // Remove selected postcards from the list
-        postcards.removeAll(selectedPostcards);
+            // Clear the list after uploading all postcards
+            postcards.clear();
 
-        // Update the displayed list
-        onShowListButtonClick();
+            // Update the displayed list
+            onShowListButtonClick();
+        } else {
+            // Get the range from the input fields
+            int from = Integer.parseInt(fromTextField.getText());
+            int to = Integer.parseInt(toTextField.getText());
 
-//        CryptogramUploader uploader = new CryptogramUploader();
-//        uploader.uploadPostcards(postcards);
+            // Validate the range
+            if (from < 1 || to > postcards.size() || from > to) {
+                // Show an error alert for invalid range
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Range");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a valid range of postcards.");
+                alert.showAndWait();
+                return;
+            }
+
+            // Get the selected postcards within the specified range
+            List<Postcard> selectedPostcards = postcards.subList(from - 1, to);
+
+            // Upload selected postcards to the database
+            CryptogramUploader uploader = new CryptogramUploader();
+            uploader.uploadPostcards(selectedPostcards, imagePath, getActiveRadioButton());
+
+            // Remove selected postcards from the list
+            postcards.removeAll(selectedPostcards);
+
+            // Update the displayed list
+            onShowListButtonClick();
+        }
     }
+
+    // Function to determine the active radio button
+    public String getActiveRadioButton() {
+        if (address.getSelectedToggle() == radioPic) {
+            return "_pic";
+        } else if (address.getSelectedToggle() == radioAdr) {
+            return "_adr";
+        } else {
+            // No radio button selected
+            return null;
+        }
+    }
+
 
 }
