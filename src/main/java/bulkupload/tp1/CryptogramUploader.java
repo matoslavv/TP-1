@@ -1,6 +1,5 @@
 package bulkupload.tp1;
 
-import bulkupload.tp1.data.PTBU;
 import bulkupload.tp1.data.Postcard;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
@@ -34,8 +33,8 @@ public class CryptogramUploader {
                 // Convert the current postcard to a JSON object
                 JsonObject postcardJson = gson.toJsonTree(postcard).getAsJsonObject();
 
-                PTBU p = new PTBU();
-                p.setRecords(postcard);
+
+
 
                 // Add the postcard as a property to the "records" object
                 jsonObject.add("records", postcardJson);
