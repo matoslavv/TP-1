@@ -275,7 +275,7 @@ public class CSV {
                 postcard.addGroupName(getColumnValue(csvRecord, "groupName2"));
                 String blobb = getColumnValue(csvRecord, "dataValue2");
                 String description = getColumnValue(csvRecord, "dataName2");
-                String fileType = getColumnValue(csvRecord, "dataType2");
+                String fileType = getColumnValue(csvRecord, "dataTyp2");
                 Data data2 = new Data(blobb, description, fileType, counter);
 //                counter++;
 
@@ -288,7 +288,7 @@ public class CSV {
 //                postcard.addGroupName(getColumnValue(csvRecord, "groupName2"));
                 String blobb = getColumnValue(csvRecord, "dataValue3");
                 String description = getColumnValue(csvRecord, "dataName3");
-                String fileType = getColumnValue(csvRecord, "dataType3");
+                String fileType = getColumnValue(csvRecord, "dataTyp3");
                 Data data3 = new Data(blobb, description, fileType, counter);
 
                 counter++;

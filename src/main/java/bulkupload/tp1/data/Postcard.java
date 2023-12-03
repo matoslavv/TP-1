@@ -219,7 +219,7 @@ public class Postcard {
 
         for (Data data : data) {
             // Check if the filetype is "Image"
-            if ("Image".equalsIgnoreCase(data.getFiletype())) {
+            if ("image".equalsIgnoreCase(data.getFiletype())) {
                 // Update the imageURL with the specified format
                 data.setBlobb(path + this.name + data.getBlobb()+".jpg");
 //                break; // Assuming you want to update imageURL only once

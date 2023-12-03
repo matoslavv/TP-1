@@ -14,7 +14,7 @@ public class Data {
         this.filetype = fileType;
         // Set default values for other fields if needed
         this.datagroupId = dataGroupId; // Assuming it's nullable
-        this.dlProtection = 1; // Assuming it's nullable
+        this.dlProtection = 0; // Assuming it's nullable
     }
 
     public String getBlobb() {
