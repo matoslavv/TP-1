@@ -222,9 +222,6 @@ public class CSV {
                     // If the category is one of these, set both name and mainCategory
                     postcardCategory.setName(categoryValue);
                     postcardCategory.setMainCategory("Substitution");
-                } else if (categoryValue.equals("Ancient")) {
-                    postcardCategory.setName(categoryValue);
-                    postcardCategory.setMainCategory("Historical");
                 } else {
                     // Otherwise, set mainCategory to NULL and name to the category value
                     postcardCategory.setName(categoryValue);
