@@ -72,7 +72,6 @@ public class LoginController implements Initializable {
         byte[] encodedhash = digest.digest(password.getText().getBytes(StandardCharsets.UTF_8));
         String pass = byteToHex(encodedhash);
 
-//        String requestBody = "{\"username\": \"" + "student" + "\", \"password\": \"" + "38f97150663a0324ce8ee81d3e0d218059229dae06d717e2acfefebfdd3b24a5" + "\"}";
         String requestBody = "{\"username\": \"" + username.getText() + "\", \"password\": \"" + pass + "\"}";
 
         try {
